@@ -4,7 +4,7 @@ from flask import Flask, render_template, redirect, url_for, session
 from flask_wtf import Form
 from wtforms.fields import RadioField, SubmitField, StringField
 from wtforms.validators import Required
-from guess import Guess
+from guess import Guess, GuessError
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
@@ -74,5 +74,10 @@ def learn():
         return redirect(url_for('index'))
     return render_template('learn.html', guess=guess, form=form)
 
+@app.errorhandler(GuessError)
+@app.errorhandler(404)
+def runtime_error(e):
+    return render_template('error.html', error=str(e))
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
