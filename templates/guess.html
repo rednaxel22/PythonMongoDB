@@ -5,5 +5,15 @@
 	<body>
 		<h1>Guess the Language</h1>
 		<p>My guess: {{ guess }}</p>
+		<p>Was I right?</p>
+		<form method="post">
+			{{ form.hidden_tag() }}
+			<p>
+				{% for option in form.answer %}
+					{{ option }} {{ option.label }}<br>
+				{% endfor %}
+			</p>
+			{{ form.submit }}
+		</form>
 	</body>
 </html>
